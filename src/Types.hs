@@ -37,6 +37,7 @@ newField input = do
   let (addrMode, address) = case optionalAddrMode of
                               '@' -> ('@', drop 1 input)
                               '#' -> ('#', drop 1 input)
+                              '<' -> ('<', drop 1 input)
                               _   -> ('$', input)
   return $ Field addrMode (read address :: Int)
 

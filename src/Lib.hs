@@ -15,20 +15,20 @@ someFunc = do
       let programs = map parseProgram line
       print programs
 
-dropLast :: String -> String
+dropLast :: [a] -> [a]
 dropLast []     = []
 dropLast [x]    = []
 dropLast (x:xs) = x : dropLast xs
 
 parseProgram :: [String] -> Program
 parseProgram lines = do
-      --contents <- readFile file
-      --let line = lines contents
-      --[(addr, f1, f2)] <- map splitOn line
       let x = map (splitOn " ") lines
       let programs = createProgram x
       programs
 
 createProgram :: [[String]] -> Program
 createProgram ([x,y,z]:rest) = newRedcode x (Just (dropLast y)) (Just z) : createProgram rest
+createProgram ([x, y]:rest)  = newRedcode x (Just y) Nothing : createProgram rest
 createProgram _ = []
+
+
