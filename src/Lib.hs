@@ -10,12 +10,10 @@ import Data.List.Split
 someFunc :: IO ()
 someFunc = do
       programPath <- getArgs
-      contents <- readFile (head programPath)
-      let line = lines contents
-      --let listOfPaths = splitOn " " programPaths
-      let programs = parseProgram line
+      contents <- mapM readFile programPath
+      let line = map lines contents
+      let programs = map parseProgram line
       print programs
-
 
 dropLast :: String -> String
 dropLast []     = []
@@ -30,8 +28,6 @@ parseProgram lines = do
       let x = map (splitOn " ") lines
       let programs = createProgram x
       programs
-
-
 
 createProgram :: [[String]] -> Program
 createProgram ([x,y,z]:rest) = newRedcode x (Just (dropLast y)) (Just z) : createProgram rest
